@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI‑On‑The‑Edge‑Cam — ESP32‑S3 with PoE, SD & Camera</title>
+  <meta name="description" content="ESP32‑S3 (N16R8) development board compatible with the AI‑on‑the‑Edge‑Device framework. Ethernet with PoE, micro‑SD, OV2640 camera with WS2812B back‑light, Stemma QT, low‑power sleep ~20µA." />
+  <!-- Open Graph -->
+  <meta property="og:title" content="AI‑On‑The‑Edge‑Cam — ESP32‑S3 with PoE, SD & Camera" />
+  <meta property="og:description" content="ESP32‑S3 (N16R8) board: PoE Ethernet, OV2640 camera with back‑lighting LEDs, micro‑SD, Stemma QT, battery management, 20µA sleep." />
+  <meta property="og:type" content="product" />
+  <meta property="og:url" content="https://your-domain.example/" />
+  <meta property="og:image" content="/images/top.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Light, more rectangular theme -->
+  <style>
+    :root{--bg:#ffffff;--panel:#f7f8fa;--ink:#222;--muted:#555;--acc:#0b66c3;--acc2:#0a4ea1;--border:#dcdfe5;--chip:#eef1f6}
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Inter,"Helvetica Neue",Arial}
+    a{color:var(--acc2);text-decoration:none}
+    a:hover{text-decoration:underline}
+    img{max-width:100%;height:auto;display:block}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:700}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:6px;background:var(--acc);color:#fff;font-weight:700;border:1px solid #0a53a3;box-shadow:0 2px 6px #0001}
+    .btn:hover{filter:brightness(1.05)}
+    .btn.alt{background:#fff;color:var(--acc2);border:1px solid var(--border)}
+    .hero{display:grid;grid-template-columns:1.2fr .9fr;gap:24px;align-items:center;padding:24px;margin-top:8px}
+    .hero h1{font-size:40px;line-height:1.15;margin:0 0 10px}
+    .hero p.lead{font-size:18px;color:var(--muted);margin:0 0 16px}
+    .chiprow{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+    .chip{background:var(--chip);border:1px solid var(--border);padding:6px 10px;border-radius:6px;color:#333;font-weight:600}
+    .panel{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px}
+    .grid{display:grid;gap:14px}
+    .grid.features{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .kpi{display:flex;align-items:center;gap:10px;padding:12px;border-radius:6px;background:#fff;border:1px solid var(--border)}
+    .kpi b{font-size:18px}
+    .specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+    dl{margin:0}
+    dt{color:var(--acc2);font-weight:700}
+    dd{margin:4px 0 12px;color:var(--ink)}
+    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+    .card .cap{padding:10px 12px;color:var(--muted);font-size:14px;border-top:1px solid var(--border)}
+    .cta{display:flex;gap:10px;flex-wrap:wrap}
+    .footer{padding:28px 0;color:var(--muted);font-size:14px}
+    .faq details{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:12px}
+    .faq summary{cursor:pointer;font-weight:700}
+    .badges{display:flex;gap:8px;flex-wrap:wrap}
+    .badge{background:#eef1f6;border:1px solid var(--border);padding:6px 8px;border-radius:6px;font-weight:600}
+    .notice{background:#eef1f6;border:1px dashed #cfd6e3;border-radius:6px;padding:12px}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}}
+    /* Print tweaks */
+    @media print{
+      .btn,.nav{display:none!important}
+      body{background:#fff;color:#000}
+      .panel,.card,.faq details{border:1px solid #bbb}
+      a{color:#000;text-decoration:underline}
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap nav">
+    <div class="logo">AI‑On‑The‑Edge‑Cam</div>
+    <nav class="cta">
+      <a class="btn" href="https://www.tindie.com/products/allexok/ai-on-the-edge-cam-esp32-s3-with-poe-sd-camera" target="_blank" rel="noopener">Buy on Tindie</a>
+      <a class="btn alt" href="#specs">Specs</a>
+      <a class="btn alt" href="#docs">Docs</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero panel">
+      <div>
+        <h1>ESP32‑S3 + PoE + Camera — ready for Edge AI</h1>
+        <p class="lead">ESP32‑S3 (N16R8) board compatible with the AI‑on‑the‑Edge‑Device framework. Ethernet with PoE, OV2640 camera with 4× WS2812B back‑light, micro‑SD, Stemma QT, external antenna, and ~20&nbsp;µA sleep.</p>
+        <div class="chiprow">
+          <span class="chip">ESP32‑S3 • 16MB Flash • 8MB PSRAM</span>
+          <span class="chip">Ethernet + PoE</span>
+          <span class="chip">OV2640 Camera</span>
+          <span class="chip">Micro‑SD</span>
+          <span class="chip">Stemma QT (Qwiic)</span>
+          <span class="chip">~20&nbsp;µA sleep</span>
+        </div>
+        <div class="cta">
+          <a class="btn" href="https://www.tindie.com/products/allexok/ai-on-the-edge-cam-esp32-s3-with-poe-sd-camera" target="_blank" rel="noopener">View on Tindie</a>
+          <a class="btn alt" href="#specs">View specs</a>
+        </div>
+      </div>
+      <div>
+        <div class="card"><img src="images/top.png" alt="AI‑On‑The‑Edge‑Cam ESP32‑S3 board with camera and external antenna"/></div>
+        <!-- <div class="kpi" style="margin-top:10px"><b>$33</b><span class="muted"> (incl. 21% CZ VAT on Tindie)</span></div> -->
+      </div>
+    </section>
+
+    <section id="highlights" class="panel" style="margin-top:20px">
+      <h2 style="margin-top:0">What makes it special</h2>
+      <ul>
+        <li>Ethernet with PoE</li>
+        <li>Camera with 4 × WS2812B smart LEDs for back‑lighting</li>
+        <li>Micro‑SD card slot</li>
+        <li>~20 µA sleep current</li>
+        <li>Integrated battery charging, protection & measurement</li>
+        <li>External antenna support</li>
+        <li>Stemma QT I²C connector for external sensors</li>
+        <li>Compatible with AI‑on‑the‑Edge‑Device (ESP32‑S3 branch)</li>
+      </ul>
+      <p class="notice">Each package includes: 1× AI‑On‑The‑Edge‑Cam board, 1× OV2640 camera module.</p>
+    </section>
+
+    <section id="specs" class="panel" style="margin-top:20px">
+      <h2 style="margin-top:0">Technical Specifications</h2>
+      <div class="specs">
+        <div>
+          <dl>
+            <dt>MCU</dt><dd>Espressif ESP32‑S3 (N16R8) — 16MB flash, 8MB PSRAM</dd>
+            <dt>Networking</dt><dd>Ethernet with PoE; 2.4&nbsp;GHz Wi‑Fi; external antenna support</dd>
+            <dt>Camera</dt><dd>OV2640 module; 4× WS2812B back‑light LEDs</dd>
+          </dl>
+        </div>
+        <div>
+          <dl>
+            <dt>Storage</dt><dd>Micro‑SD card slot</dd>
+            <dt>Expansion</dt><dd>Stemma QT (Qwiic) I²C connector</dd>
+            <dt>Power</dt><dd>Battery charging, protection & measurement; ~20&nbsp;µA sleep</dd>
+          </dl>
+        </div>
+        <div>
+          <dl>
+            <dt>Framework</dt><dd>Compatible with <a href="https://github.com/jomjol/AI-on-the-edge-device" target="_blank" rel="noopener">AI‑on‑the‑Edge‑Device</a> (ESP32‑S3 branch)</dd>
+            <dt>Included</dt><dd>Board + OV2640 camera module</dd>
+            <!-- <dt>Price</dt><dd>$33 (incl. 21% CZ VAT on Tindie)</dd> -->
+          </dl>
+        </div>
+      </div>
+      <p class="notice">Hardware note (V2.1.0): for accurate battery measurement, add a 0.1–1&nbsp;µF capacitor between GPIO2 and GND (or use software filtering).</p>
+    </section>
+
+    <section class="panel" id="gallery" style="margin-top:20px">
+      <h2 style="margin-top:0">Gallery</h2>
+      <div class="gallery">
+        <figure class="card"><img src="images/top.png" alt="Device + camera + external antenna"><figcaption class="cap">Device + camera + external antenna</figcaption></figure>
+        <figure class="card"><img src="images/shuttle.jpg" alt="LoRaWAN Shuttle Shield"><figcaption class="cap">LoRaWAN Shuttle Shield attached</figcaption></figure>
+        <figure class="card"><img src="images/side.jpg" alt="Device with LoRaWAN shuttle and battery"><figcaption class="cap">Device with LoRaWAN shuttle and battery connected</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="panel" id="docs" style="margin-top:20px">
+      <h2 style="margin-top:0">Docs & Resources</h2>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+        <div class="card" style="padding:12px">
+          <h3 style="margin:0 0 6px">Hackaday project</h3>
+          <p class="muted">Project development and electrical specs.</p>
+          <p><a class="btn alt" href="https://hackaday.io/project/203879-ai-on-the-edge-cam" target="_blank" rel="noopener">View on Hackaday</a></p>
+        </div>
+        <div class="card" style="padding:12px">
+          <h3 style="margin:0 0 6px">Arduino / PlatformIO Examples</h3>
+          <p class="muted">Starter sketches and build configs.</p>
+          <p><a class="btn alt" href="https://github.com/allexoK/ai-on-the-edge-device-cam-code-examples" target="_blank" rel="noopener">View on GitHub</a></p>
+        </div>
+        <div class="card" style="padding:12px">
+          <h3 style="margin:0 0 6px">AI‑on‑the‑Edge‑Device (Repo)</h3>
+          <p class="muted">Main project repository.</p>
+          <p><a class="btn alt" href="https://github.com/jomjol/AI-on-the-edge-device" target="_blank" rel="noopener">Project Repo</a></p>
+        </div>
+        <div class="card" style="padding:12px">
+          <h3 style="margin:0 0 6px">AI‑on‑the‑Edge‑Device (Docs)</h3>
+          <p class="muted">Official documentation & wiki.</p>
+          <p><a class="btn alt" href="https://jomjol.github.io/AI-on-the-edge-device-docs/" target="_blank" rel="noopener">Open Docs</a></p>
+        </div>
+        <div class="card" style="padding:12px">
+          <h3 style="margin:0 0 6px">Background discussion</h3>
+          <p class="muted">Project discussion with framework developers.</p>
+          <p><a class="btn alt" href="https://github.com/jomjol/AI-on-the-edge-device/discussions" target="_blank" rel="noopener">Read Discussions</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel faq" style="margin-top:20px">
+      <h2 style="margin-top:0">FAQ</h2>
+      <details open>
+        <summary>Is it compatible with AI‑on‑the‑Edge‑Device?</summary>
+        <p>Yes — use the ESP32‑S3 branch. See the repo and docs for flashing instructions.</p>
+      </details>
+      <details>
+        <summary>What’s included in the package?</summary>
+        <p>One AI‑On‑The‑Edge‑Cam board and an OV2640 camera module.</p>
+      </details>
+      <details>
+        <summary>How do I power it?</summary>
+        <p>Via PoE Ethernet (recommended), USB‑C, or battery. Low‑power sleep draws about 20&nbsp;µA for battery‑friendly deployments.</p>
+      </details>
+    </section>
+
+    <section class="panel" style="margin-top:20px;text-align:center">
+      <h2 style="margin-top:0">Ready to build?</h2>
+      <p>Grab the board on Tindie and start prototyping edge‑AI cameras in minutes.</p>
+      <p><a class="btn" href="https://www.tindie.com/products/allexok/ai-on-the-edge-cam-esp32-s3-with-poe-sd-camera" target="_blank" rel="noopener">Buy on Tindie</a></p>
+      <p style="margin-top:6px;color:var(--muted)">Out of stock? Click “Notify me” on Tindie to get an email when it’s back.</p>
+    </section>
+
+    <footer class="wrap footer">
+      <div class="badges">
+        <span class="badge">Designed in Czechia</span>
+        <span class="badge">Open schematics</span>
+        <span class="badge">Edge‑AI ready</span>
+      </div>
+      <p style="margin-top:6px">© <span id="y"></span> Prokyber. All rights reserved. — <a href="mailto:support@example.com">Contact</a></p>
+    </footer>
+  </main>
+
+  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>
